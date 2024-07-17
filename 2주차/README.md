@@ -54,10 +54,10 @@ public class AppConfig {
 ```
 <br/>
 
-**이제 memberServiceImpl이나 orderServiceImpl은 의존관게에 대한 고민은 외부(AppConfig)에 맡기고 실행에만 집중하면 된다.**<br/>
+**이제 memberServiceImpl이나 orderServiceImpl은 의존관계에 대한 고민은 외부(AppConfig)에 맡기고 실행에만 집중하면 된다.**<br/><br/>
 
 
-+ *DI(Dependency Injection): 의존관계 주입 혹은 의존성 주입이라고 한다.*
++ *DI(Dependency Injection): 의존관계 주입 혹은 의존성 주입이라고 한다.*<br/>
 
 + *test에서 @BeforeEach를 이용하면 각 test 실행 전에 메소드를 실행하고, test를 한다.*
 ```java
@@ -67,7 +67,7 @@ public class AppConfig {
         memberService = appConfig.memberService();
     }
 ```
-<br/><br/>
+<br/>
 
 ### AppConfig 리팩터링
 현재 AppConfig는 **중복**이 있고, **역할**에 따른 구현이 안 보인다. 역할들을 드러나게 하는 것이 중요하다. 그 방법이 리팩터링이다. <br/>
@@ -101,26 +101,28 @@ public DiscountPolicy discountPolicy() {
 private final MemberRepository memberRepository;
 private final DiscountPolicy discountPolicy;
 ```
-<br/><br/>
+<br/>
 
 ### IoC, DI, 그리고 컨테이너
-**IoC(제어의 역전, Inversion of Control)**: 개발자가 직접 객체를 생성하고 호출하고 컨트롤, 제어하는 것이 아니라 프레임워크가 대신 코드를 호출해주는 것이다.<br/>
+**IoC(제어의 역전, Inversion of Control)**: 개발자가 직접 객체를 생성하고 호출하고 컨트롤, 제어하는 것이 아니라 프레임워크가 대신 코드를 호출해주는 것이다.<br/><br/>
 
 이전 프로그램은 클라이언트 구현 객체가 서버 구현 객체를 생성하고, 연결하고, 실행했다. 클라이언트 구현 객체가 프로그램의 제어 흐름을 스스로 조종한다.<br/>
 
-AppConfig가 등장하고 난 후, 더 이상 클라이언트 구현 객체가 필요한 인터페이스를 호출은 하지만 어떤 구현 객체가 실행될지는 전혀 알지 못한다.<br/> 즉 AppConfig가 프로그램의 제어 흐름을 담당하게 되는 것이다. 이렇게 외부에서 관리하는 것이 제어의 역전이다.<br/>
+AppConfig가 등장하고 난 후, 더 이상 클라이언트 구현 객체가 필요한 인터페이스를 호출은 하지만 어떤 구현 객체가 실행될지는 전혀 알지 못한다. 즉 AppConfig가 프로그램의 제어 흐름을 담당하게 되는 것이다. 이렇게 외부에서 관리하는 것이 제어의 역전이다.<br/><br/>
 
 **프레임워크 vs 라이브러리**:
 * 프레임워크는 내가 작성한 코드를 제어하고, 대신 실해하는 것이다. ex) JUnit
 * 내가 직접 작성한 코드가 직접 제어의 흐름을 담당하면 라이브러리다.
 <br/>
 
+**정적인 의존 관계 vs 동적인 의존 관계**
 * 정적인 의존 관계: 클라이언트 구현 객체를 보면 실행하지 않고도 정적으로 어떤 의존 관계를 가지고 있는 지 알 수 있다. 하지만 실행에서 실제 어떤 객체가 들어가는 지 알 수 없다.
-* 동적인 의존 관계: 어플리케이션 실행 시점에서 실제로 생성된 객체 인스턴스의 참조가 연결된 의존 관계이다.
+* 동적인 의존 관계: 어플리케이션 실행 시점에서 실제로 생성된 객체 인스턴스의 참조가 연결된 의존 관계이다.<br/>
+
 -> *그래서 의존관계 주입을 사용하면 클라이언트 코드를 건드리지 않고(정적인 의존 관계) 동적인 의존 관계를 쉽게 변경할 수 있다.*
 <br/>
 
-이러한 역할을 하는 것이 IoC 컨테이너 혹은 DI 컨테이너라고 부른다. (IoC는 범용적인 개념이기 때문에 보통 **DI 컨테이너**라고 부른다.)
+이러한 역할을 하는 것을 IoC 컨테이너 혹은 DI 컨테이너라고 부른다. (IoC는 범용적인 개념이기 때문에 보통 **DI 컨테이너**라고 부른다.)
 <br/><br/>
 
 ### 정리
@@ -144,8 +146,6 @@ MemberService memberService = applicationContext.getBean("memberService",MemberS
 
 * ApplicationContext = **스프링 컨테이너**
 기존에는 AppConfig를 사용해서 직접 객체를 생성하고 DI 했다. 이제부턴 스프링 컨테이너를 통해서 사용한다.
-<br/>
-
 + name은 기본적으로 Bean 메소드의 이름을 사용한다.
 + 이제 getBean 메소드를 이용해서 가져온다.
 
@@ -167,7 +167,7 @@ ApplicationContext는 스프링 컨테이너로 인터페이스이다.<br/>
 * ac.getBeanDefinitionNames(): 스프링에 등록된 모든 빈 이름 조회
 * ac.getBean(): 빈 이름으로 빈 객체를 조회한다.
     * getBean("이름", 타입)
-    * getBean(타입)
+    * getBean(타입)<br/>
 타입에 구현 객체 타입으로 넣어도 된다. 물론 역할(인터페이스)에 의존하지 않고 구현에 의존했기 때문에 좋은 것은 아니다. 유연성이 떨어진다.
 <br/>
 
@@ -275,7 +275,7 @@ public class ApplicationContextSameBeanFindTest {
     }
 }
 ```
-<br/><br/>
+<br/>
 
 ### 스프링 빈 조회 - 상속 관계 
 부모 타입으로 조회를 하면, 자식 타입도 함께 조회한다. 그래서 object 타입으로 조회하면 모든 스프링 빈을 조회한다.
@@ -341,7 +341,7 @@ public class ApplicationContextExtendsFindTest {
     }
 }
 ```
-<br/><br/>
+<br/>
 
 ### BeanFactory와 ApplicationContext
 **BeanFactroy**: 스프링 컨테이너의 최상위 인터페이스이다. 스프링 빈을 관리하고 조회하는 역할을 담당한다.
@@ -358,13 +358,13 @@ public class ApplicationContextExtendsFindTest {
 ### 다양한 설정 형식 지원 - 자바 코드, XML
 스프링 컨테이너는 다양한 형식의 설정 정보를 받아들일 수 있게 유연하게 설계되어 있다.<br/>
 자바 코드, XML, Groovy등
-<br/>
+<br/><br/>
 ex) ApplicationContext를 상속받아서<br/>
 * AnnotationConfig ApplicationContext -> AppConfig.class
 * GenericXml ApplicationContext -> appConfig.xml
 * Xxx ApplicationContext -> appConfig.xxx
 
-+ New -> XML Configuration File -> Spring Config로 XML파일 생성이 가능하다.
+New -> XML Configuration File -> Spring Config로 XML파일 생성이 가능하다.
 <br/> <br/>
 
 ### 스프링 빈 설정 메타 정보 - BeanDefinition
@@ -385,49 +385,50 @@ ex) ApplicationContext를 상속받아서<br/>
 solved.ac class1 문제 풀이<br/>
 
 python 기초 문법<br/>
-* print("String", end=""): print()는 디폴트로 end="\n"이 포함되어 있다. 
+* print("String", end=""): print()는 디폴트로 end="\n"이 포함되어 있다. <br/>
 * 파이썬 자료형
-    numeric: 실수, 정수, 복소수
-    boolean: True, False
-    String: "spring"
-    List: ["apple", "cherry"]
-    Tuple: ("apple", "cherry") 튜플은 리스트와 다르게 요소가 변할 수 없다.
-    Dictionary: {"apple" : 1000, "cherry" : "fruit"}
-    Set: {"apple", "cherry", "apple"} 중복된 요소를 가질 수 있다.
-* while문이 무한대로 작동하기 때문에 try, except를 이용해 런타임 에러가 발생했을 때 프로그램을 중지할 수 있도록 한다.
-* chr: 정수를 아스키코드로 / ord: 아스키코드를 정수로
-* 파이썬은 증감연산자가 없고 a += 1를 사용해야 한다.
+<br/>numeric: 실수, 정수, 복소수
+<br/>boolean: True, False
+<br/>String: "spring"
+<br/>List: ["apple", "cherry"]
+<br/>Tuple: ("apple", "cherry") 튜플은 리스트와 다르게 요소가 변할 수 없다.
+<br/>Dictionary: {"apple" : 1000, "cherry" : "fruit"}
+<br/>Set: {"apple", "cherry", "apple"} 중복된 요소를 가질 수 있다.<br/>
+* while문이 무한대로 작동하기 때문에 try, except를 이용해 런타임 에러가 발생했을 때 프로그램을 중지할 수 있도록 한다.<br/>
+* chr: 정수를 아스키코드로 / ord: 아스키코드를 정수로<br/>
+* 파이썬은 증감연산자가 없고 a += 1를 사용해야 한다.<br/>
 * sum() 함수
 1. sum(iterable): 반드시 인자로는 "숫자로만 이루어진 리스트 혹은 튜플" 이어야 한다. 
-2. sum(iterable, start = 0): 시작값 디폴트는 0이고, 지정할 수 있다. 
-*   1. 문자열.rjust(n): 오른쪽 정렬
-    2. 문자열.ljust(n): 왼쪽 정렬
-    3. 문자열.center(n): 가운데 정렬 
-    4. 문자열.zfill(n): 숫자 남은 자리에 0이 채워짐
+2. sum(iterable, start = 0): 시작값 디폴트는 0이고, 지정할 수 있다. <br/>
+* 문자열 정렬
+1. 문자열.rjust(n): 오른쪽 정렬
+2. 문자열.ljust(n): 왼쪽 정렬
+3. 문자열.center(n): 가운데 정렬 
+4. 문자열.zfill(n): 숫자 남은 자리에 0이 채워짐<br/>
 * list 원소 추가
 1. list.append(n): 리스트 마지막에 원소 하나 추가
 2. list1 + list2: + 연산자로 이어 붙이기
 k = m + n or k += [11, 23]
-3. list.expend([11, 23])
+3. list.expend([11, 23])<br/>
 * list 원소 삭제
 1. del list[index]
-2. list.remove(n): 찾을 원소인 n이 없으면 ValueError
+2. list.remove(n): 찾을 원소인 n이 없으면 ValueError<br/>
 * max(), min() 함수
 max(list): 리스트 중에 최댓값을 찾는다. 만약 문자라면 알파벳 순서로 최댓값을 찾는다.
-min(list): 리스트 중에 최솟값을 찾는다.
+min(list): 리스트 중에 최솟값을 찾는다.<br/>
 * list.index() 함수
 1. list.index(n): 찾을 원소인 n의 index를 반환한다.
 2. list.index(n, start_index, end_index): start_index부터 end_index사이의 찾을 언소인 n의 index를 반환한다.
-만약 중복된 원소가 있으면 가장 작은 index를 반환한다. 문자열도 가능하다.
+만약 중복된 원소가 있으면 가장 작은 index를 반환한다. 문자열도 가능하다.<br/>
 * 문자열을 리스트 형태로 출력이 가능하다.
-String[1]
-String[0]
-String[-1]
-String[0:5]: 0번째 인덱스부터 5번 출력
-String[-5:]: 뒤에서부터 5번 출력
-String[::2]: 두글자 간격으로 출력
+<br/>String[1]
+<br/>String[0]
+<br/>String[-1]
+<br/>String[0:5]: 0번째 인덱스부터 5번 출력
+<br/>String[-5:]: 뒤에서부터 5번 출력
+<br/>String[::2]: 두글자 간격으로 출력<br/>
 * 문자열.split() 함수
 1. split()
 2. spilt('구분자')
-3. spilt('구분자', 분할횟수)
+3. spilt('구분자', 분할횟수)<br/>
 * 문자열끼리 A + B가 가능하지만, A - B는 불가능하기 때문에 int로 형변환했다.
