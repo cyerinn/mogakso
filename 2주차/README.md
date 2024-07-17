@@ -148,6 +148,7 @@ MemberService memberService = applicationContext.getBean("memberService",MemberS
 기존에는 AppConfig를 사용해서 직접 객체를 생성하고 DI 했다. 이제부턴 스프링 컨테이너를 통해서 사용한다.
 + name은 기본적으로 Bean 메소드의 이름을 사용한다.
 + 이제 getBean 메소드를 이용해서 가져온다.
+<br/><br/><br/>
 
 ## 스프링 컨테이너와 스프링 빈
 ### 스프링 컨테이너 생성
@@ -387,13 +388,13 @@ solved.ac class1 문제 풀이<br/>
 python 기초 문법<br/>
 * print("String", end=""): print()는 디폴트로 end="\n"이 포함되어 있다. <br/>
 * 파이썬 자료형
-<br/>numeric: 실수, 정수, 복소수
-<br/>boolean: True, False
-<br/>String: "spring"
-<br/>List: ["apple", "cherry"]
-<br/>Tuple: ("apple", "cherry") 튜플은 리스트와 다르게 요소가 변할 수 없다.
-<br/>Dictionary: {"apple" : 1000, "cherry" : "fruit"}
-<br/>Set: {"apple", "cherry", "apple"} 중복된 요소를 가질 수 있다.<br/>
+1. numeric: 실수, 정수, 복소수
+2. boolean: True, False
+3. String: "spring"
+4. List: ["apple", "cherry"]
+5. Tuple: ("apple", "cherry") 튜플은 리스트와 다르게 요소가 변할 수 없다.
+6. Dictionary: {"apple" : 1000, "cherry" : "fruit"}
+7. Set: {"apple", "cherry", "apple"} 중복된 요소를 가질 수 있다.<br/>
 * while문이 무한대로 작동하기 때문에 try, except를 이용해 런타임 에러가 발생했을 때 프로그램을 중지할 수 있도록 한다.<br/>
 * chr: 정수를 아스키코드로 / ord: 아스키코드를 정수로<br/>
 * 파이썬은 증감연산자가 없고 a += 1를 사용해야 한다.<br/>
@@ -414,8 +415,8 @@ k = m + n or k += [11, 23]
 1. del list[index]
 2. list.remove(n): 찾을 원소인 n이 없으면 ValueError<br/>
 * max(), min() 함수
-max(list): 리스트 중에 최댓값을 찾는다. 만약 문자라면 알파벳 순서로 최댓값을 찾는다.
-min(list): 리스트 중에 최솟값을 찾는다.<br/>
+1. max(list): 리스트 중에 최댓값을 찾는다. 만약 문자라면 알파벳 순서로 최댓값을 찾는다.
+2. min(list): 리스트 중에 최솟값을 찾는다.<br/>
 * list.index() 함수
 1. list.index(n): 찾을 원소인 n의 index를 반환한다.
 2. list.index(n, start_index, end_index): start_index부터 end_index사이의 찾을 언소인 n의 index를 반환한다.
@@ -426,7 +427,7 @@ min(list): 리스트 중에 최솟값을 찾는다.<br/>
 <br/>String[-1]
 <br/>String[0:5]: 0번째 인덱스부터 5번 출력
 <br/>String[-5:]: 뒤에서부터 5번 출력
-<br/>String[::2]: 두글자 간격으로 출력<br/>
+<br/>String[::2]: 두글자 간격으로 출력<br/><br/>
 * 문자열.split() 함수
 1. split()
 2. spilt('구분자')
