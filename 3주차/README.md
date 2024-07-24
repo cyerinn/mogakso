@@ -4,11 +4,12 @@ Link: <https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%
 ## 싱글톤 컨테이너
 ### 웹 애플리케이션과 싱글톤
 기본적으로 클라이언트들이 요청을 하면 DI 컨테이너(서버)에서 객체를 생성하고, 연결을 해야 한다.<br/>
-웹 어플리케이션은 보통 여러 고객이 동시에 요청을 한다. 그래서 수많은 클라이언트의 요청을 하나씩 만드는 것은 아래와 같이 매우 비효율적이다.<br/>
+웹 어플리케이션은 보통 여러 고객이 동시에 요청을 한다. 
+<br/>그래서 수많은 클라이언트의 요청을 하나씩 만드는 것은 아래와 같이 매우 비효율적이다.<br/>
 즉, 스프링 없이 순수한 DI 컨테이너인 AppConfig는 요청을 할 때마다 객체를 새로 생성하고 소멸하게 된다.<br/>
-그래서 고객 트래픽이 초당 100이 나오면 초당 100개가 생성되고 소멸이 된다 -> 메모리 낭비가 심하다.<br/>
+결국 고객 트래픽이 초당 100이 나오면 초당 100개가 생성되고 소멸이 된다 -> 메모리 낭비가 심하다.<br/><br/>
 
-**그래서 객체를 하나만 만들고 그 객체 인스턴스를 공유하도록 설계하면 된다 -> 싱글톤 패턴**
+**그래서 객체를 하나만 만들고 그 객체 인스턴스를 공유하도록 설계하면 된다 -> 싱글톤 패턴** <br/>
 싱글톤 패턴은 클래스의 인스턴스가 한개만 생성되도록 보장하는 디자인 패턴을 이야기 하는데 결국 2개 이상의 인스턴스가 만들어지지 않도록 하는 것이다.<br/>
 ```java
 private static final SingletonService instance = new SingletonService();
@@ -45,21 +46,21 @@ private SingletonService(){
 
 ### 싱글톤 컨테이너
 이때 스프링 컨테이너는 싱글톤 패턴의 단점을 상쇄시켜주면서 싱글톤 패턴(싱글톤 레지스트리)을 지원한다.<br/>
-*스프링 컨테이너 = 싱글톤 컨테이너*<br/>
+*스프링 컨테이너 = 싱글톤 컨테이너*<br/><br/>
 
-그래서 스프링 컨테이너를 보면 스프링 빈 저장소 안에 빈 이름과 매핑되는 빈 객체는 이미 생성된 하나의 객체 인스턴스이다.
+그래서 스프링 컨테이너를 보면 스프링 빈 저장소 안에 빈 이름과 매핑되는 빈 객체는 이미 생성된 하나의 객체 인스턴스이다.<br/>
 ex) MemberServiceImpl@x01 <br/>
 
 스프링 컨테이너로 test하면<br/>
 
-memberService1 = hello.core.member.MemberServiceImpl@c94fd30
+memberService1 = hello.core.member.MemberServiceImpl@c94fd30<br/>
 memberService2 = hello.core.member.MemberServiceImpl@c94fd30<br/>
 
 같은 참조값을 가진다는 것을 확인할 수 있다.<br/><br/>
 
 ### 싱글톤 방식의 주의점
 여러 클라이언트가 하나의 객체 인스턴스를 공유하기 때문에(동시성 문제) 싱글톤 객체는 상태를 유지(stateful)하게 설계하면 안된다.<br/>
-**즉 무상태(statelsess)로 설계해야 한다.** <br/>
+**-> 즉 무상태(statelsess)로 설계해야 한다.** <br/>
 
 * 클라이언트에 의존적인 필드가 있으면 안된다.
 * 클라이언트가 값을 변경할 수 있는 필드가 있으면 안된다
@@ -113,7 +114,7 @@ public int order(String name, int price){
 
 ### @Configuration과 싱글톤
 * MemberService -> new MemoryMemberRepository
-* OrderService -> new MemoryMemberRepository
+* OrderService -> new MemoryMemberRepository<br/>
 같은 타입의 객체를 두 번 생성하기 때문에 싱글톤 패턴이 깨진다고 생각하게 된다.
 그러나 @Configuration을 붙이면 순수한 자바 코드 그대로 읽지 않고 *스프링 컨테이너는 싱글톤 레지스트리를 지원한다.*
 <br/><br/>
@@ -125,7 +126,7 @@ AppConfig bean = ac.getBean(AppConfig.class);
 System.out.println("bean = " + bean.getClass()); //getClass(): 객체의 클래스를 출력하는 함수
 ```
 class hello.core.AppConfigSpringCGLIB0가 출력된다.<br/>
-내가 직접 만든 클래스가 아니라 CGLIB라는 바이트 코드 조작 라이브러리를 사용해서 AppConfig 클래스를 상속받은 임의의 다른 클래스를 만들고, 그 다른 클래스를 스프링 빈으로 등록한 것이기 때문이다. AppConfig클래스를 상속받아 메서드를 오버라이딩한다. <br/>
+내가 직접 만든 클래스가 아니라 CGLIB라는 바이트 코드 조작 라이브러리를 사용해서 AppConfig 클래스를 상속받은 임의의 다른 클래스를 만들고, 그 다른 클래스를 스프링 빈으로 등록한 것이기 때문이다. AppConfig클래스를 상속받아 메서드를 오버라이딩한다. <br/><br/>
 그래서 이 다른 클래스 AppConfig@CGLIB가 싱글톤을 보장해주는 것이다.
 <br/><br/><br/>
 
@@ -133,7 +134,7 @@ class hello.core.AppConfigSpringCGLIB0가 출력된다.<br/>
 ### 컴포넌트 스캔과 의존관계 자동 주입 시작하기
 스프링 빈을 등록할 때 @Bean을 직접 나열했다. 하지만 스프링 빈이 수십, 수백개가 되면 등록하기가 힘들다.<br/>
 * 그래서 스프링은 자동으로 스프링 빈을 등록하는 **컴포넌트 스캔**이라는 기능을 제공한다.
-* 그리고 의존 관계도 자동으로 주입하는 **@AutoWired**라는 기능도 존재한다.<br/>
+* 그리고 의존 관계도 자동으로 주입하는 **@AutoWired**라는 기능도 존재한다.<br/><br/>
 
 예를 들어,
 ```java
@@ -147,7 +148,7 @@ class hello.core.AppConfigSpringCGLIB0가 출력된다.<br/>
 <br/>
 
 그리고 컴포넌트 스캔을 했으니 의존 관계를 주입해야 한다.(DI 컨테이너가 한 일이 객체를 **생성, 연결** 두가지다.)
-* @AutoWired를 이용해서 자동으로 의존 관계를 주입한다. (클라이언트 코드의 생성자 앞에 @AutoWired를 추가한다.)
+3. @AutoWired를 이용해서 자동으로 의존 관계를 주입한다. (클라이언트 코드의 생성자 앞에 @AutoWired를 추가한다.)
 <br/>
 
 + 스프링 빈의 이름을 변경하고 싶으면 @Component("memberService2")를 추가하면 된다.
