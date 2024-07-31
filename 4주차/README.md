@@ -8,7 +8,7 @@ remind> 빈 생성 -> 의존 관계 주입 두 과정을 거쳐서 스프링 컨
 1. **생성자 주입** (생성자 앞에 @Autowired 붙이기): 생성자가 처음 호출된 시점에서만 호출된다. 그래서 필드에 대한 불변이라는 것이다. <br/>
 
 * 그리고 필수로 생성자에 모든 객체를 넣어주는 것이 권장된다.
-* 생성자가 하나만 있다면 자동으로 @Autowired가 자동으로 주입된다. 그러나 생성자가 두 개 이상이라면 반드시 @Autowired를 붙여줘야만 한다.<br/>
+* 생성자가 하나만 있다면 자동으로 @Autowired가 자동으로 주입된다. 그러나 생성자가 두 개 이상이라면 반드시 @Autowired를 붙여줘야만 한다.<br/><br/>
 
 2. **수정자 주입(setter 주입)**: setter 앞에 @Autowired를 붙인다. 생성자 주입은 객체를 생성함과 동시에 의존관계를 주입하게 되는 반면에 수정자 주입은 두 단계를 거치게 된다.<br/>
 
@@ -30,7 +30,7 @@ public void setMemberRepository(MemberRepository memberRepository) {
 3. **필드 주입**: 필드 앞에 바로 @Autowired를 붙인다. 이전엔 많이 사용했지만 외부에서 변경하기가 어려워서 안티패턴이라고도 불린다.<br/>
 순수한 자바 코드가 아니기 때문에 setter 없이 순수한 자바 코드로 직접 값을 넣어 테스트하기 어렵다.<br/>
 
-**-> 그러니 사용을 지양하는 것이 좋다.** <br/>
+**-> 그러니 사용을 지양하는 것이 좋다.** <br/><br/>
 
 4. **일반 메서드 주입**: 아무 메서드에 @Autowired를 붙여서 의존관계를 주입한다. 일반적으로 잘 사용하진 않는다.<br/>
 
@@ -41,7 +41,7 @@ public void init(DiscountPolicy discountPolicy, MemberRepository memberRepositor
     this.memberRepository = memberRepository;
 }
 ```
-<br/><br/>
+<br/>
 
 ### 옵션 처리
 주입할 스프링 빈이 없어도 동작해야 할 때가 있다.<br/>
@@ -66,7 +66,7 @@ public void setNoBean3(Optional<Member> noBean3){
 <br/>
 출력 결과<br/>
 noBean2 = null<br/>
-noBean3 = Optional.empty<br/>
+noBean3 = Optional.empty<br/><br/>
 
 1. noBean1은 자동 주입할 대상이 없다면 수정자 메소드 자체가 호출되지 않는다.
 2. noBean2는 호출은 되지만 null로 들어온다.
@@ -80,10 +80,10 @@ noBean3 = Optional.empty<br/>
 * 생성자 주입은 객체를 생성할 때 한 번만 호출이 되므로 불변하게 설계가 가능하다.
 * 생성자 주입은 필드에 final을 붙일 수 있다. 테스트 전에 생성자에 값이 설정되지 않은 오류를 확인해볼 수도 있다.<br/>
 
-**누락**
+**누락** <br/>
 프레임워크 없이 순수한 자바 코드를 단위 테스트하는 경우 생성자 주입을 사용하지 않으면 오류가 발생하기 쉽다.<br/>
 
-**-> 생성자 주입 사용을 권장한다.** <br/>
+**-> 생성자 주입 사용을 권장한다.** <br/><br/>
 
 만약 수정자 주입을 사용한다면,<br/>
 ```java
@@ -91,7 +91,7 @@ OrderServiceImpl orderService = new OrderServiceImpl();
 orderService.createOrder(1L, "itemA", 10000);
 ```
 수정자 주입을 통해서 test를 실행하면 NullPointerException이 발생한다.<br/>
-순수한 자바코드로 테스트를 했기 때문에 OrderServiceImpl 객체를 생성하기 위해선 memberRepository와 discountPolicy의 객체도 참조해줘야만 한다. 그러나 수정자 주입은 스프링 프레임워크에서만 작동하기 때문에 오류가 발생한 것이다.<br/>
+순수한 자바코드로 테스트를 했기 때문에 OrderServiceImpl 객체를 생성하기 위해선 memberRepository와 discountPolicy의 객체도 참조해줘야만 한다. 그러나 수정자 주입은 스프링 프레임워크에서만 작동하기 때문에 오류가 발생한 것이다.<br/><br/>
 
 ```java
 @Test
@@ -158,7 +158,7 @@ public OrderServiceImpl(DiscountPolicy discountPolicy, @Qualifier("mainDiscountP
     this.memberRepository = memberRepository;
 }
 ```
-+ @Qualifier로 주입하면 중복 빈을 찾을 때 사용할 뿐만 아니라 못찾으면 파라미터로 넣은 이름의 스프링 빈을 추가로 찾는다. 그런데 Qualifier를 찾는 용도로 쓰는 것이 명확하다.<br/>
++ @Qualifier로 주입하면 중복 빈을 찾을 때 사용할 뿐만 아니라 못찾으면 파라미터로 넣은 이름의 스프링 빈을 추가로 찾는다. 그런데 Qualifier를 찾는 용도로 쓰는 것이 명확하다.<br/><br/>
 
 3. **@Primary**: 우선순위를 지정하는 방법이다. 우선순위를 가진 빈에 @Primary를 붙이면 된다. <br/><br/>
 
@@ -223,7 +223,7 @@ call = http://naver.com message = 초기화 연결 메시지<br/>
 NetworkClient.destroy # ac.close() 이후 종료 메시지<br/>
 close<br/>
 
-위와 같이 안전하게 스프링 초기화, 종료가 됨을 확인할 수 있다.<br/>
+위와 같이 안전하게 스프링 초기화, 종료가 됨을 확인할 수 있다.<br/><br/>
 
 단점으로 스프링 전용 인터페이스로 프레임워크에 의존한다. 코드를 고칠 수 없는 외부 라이브러리에 적용할 수 없다.<br/>
 또한 초기화, 소멸 메서드 이름을 고칠 수 없다.<br/>
@@ -242,7 +242,7 @@ public NetworkClient networkClient(){
 
 * 메서드 이름을 지정할 수 있다.
 * 스프링 빈이 스프링 코드에 의존하지 않는다. (아래 코드의 클래스를 보면)
-* 코드가 아닌 설정 정보를 사용해서 외부 라이브러리에도 초기화, 종료 메서드 적용이 가능하다
+* 코드가 아닌 설정 정보를 사용해서 외부 라이브러리에도 초기화, 종료 메서드 적용이 가능하다<br/>
 
 ```java
 public void init() {
@@ -287,7 +287,7 @@ for i in range(len(countList)):
 ```
 * 메모리 초과 문제를 해결하기 위해 계수 정렬 사용(메모리 사용이 적고 빠르다는 장점이 있다.)
 * 입력받은 리스트를 만들지 않고, 입력 받자마자 counting으로 변경해 메모리 사용을 줄였다.
-* 원래 코드는 sort 사용, (input()또한 메모리 소모가 크다)<br/>
+* 원래 코드는 sort 사용, (input()또한 메모리 소모가 크다)<br/><br/>
 
 * 이항계수 nCk = N! / (N - K)! / K!
 1. math.factorial 함수 이용
