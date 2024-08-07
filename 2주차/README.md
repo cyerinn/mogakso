@@ -394,7 +394,7 @@ python 기초 문법<br/>
 4. List: ["apple", "cherry"]
 5. Tuple: ("apple", "cherry") 튜플은 리스트와 다르게 요소가 변할 수 없다.
 6. Dictionary: {"apple" : 1000, "cherry" : "fruit"}
-7. Set: {"apple", "cherry", "apple"} 중복된 요소를 가질 수 있다.<br/>
+7. Set: {"apple", "cherry", "apple"} 중복된 요소를 가질 수 없다.<br/>
 * while문이 무한대로 작동하기 때문에 try, except를 이용해 런타임 에러가 발생했을 때 프로그램을 중지할 수 있도록 한다.<br/>
 * chr: 정수를 아스키코드로 / ord: 아스키코드를 정수로<br/>
 * 파이썬은 증감연산자가 없고 a += 1를 사용해야 한다.<br/>
