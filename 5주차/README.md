@@ -239,7 +239,8 @@ myLogger = class hello.core.common.MyLoggerSpringCGLIB0<br/>
 이런 프로토 타입, 프록시를 이용하는 request 스코프 등은 유지보수에 어려움이 있어서 꼭 필요할 때 사용하는 것이 좋다.
 <br/><br/><br/>
 
-# 모든 개발자를 위한 HTTP 웹 기본 지식
+# 모든 개발자를 위한 HTTP 웹 기본 지식 (김영한 강의)
+Link: https://www.inflearn.com/course/http-%EC%9B%B9-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC
 ## 인터넷 네트워크
 ### IP(인터넷 프로토콜)
 컴퓨터는 고유한 IP주소를 가지고 있다. 패킷이라는 통신 단위로 데이터를 전달한다.<br/>
@@ -324,7 +325,7 @@ def add(a, b)
 add = lamda x, y : x + y
 ```
 
-[age, name] 중에 age만 비교하고 싶다면 아래 코드를 사용하면 된다.<br/>
+[age, name]들의 list인 2차원 배열이 있다고 생각하자. age만 비교하고 싶다면 아래 코드를 사용하면 된다.<br/>
 ```python
 sort(key = lamda x : x[0])
 ```
@@ -347,7 +348,7 @@ brute: 무식한, force:힘 즉 무차별 대입으로 문제를 해결한다.<b
 2. index(): 
     * 문자열, 튜플, 리스트
     * 찾는 문자가 없는 경우 ValueError 발생
-+ 인덱스를 뒤에서부터 찾고 싶으면 rfind(), rindex() 함수를 이용하면 된다.<br/>
++ 인덱스를 뒤에서부터 찾고 싶으면 rfind(), rindex() 함수를 이용하면 된다.<br/><br/>
 
 * 
 ```python
@@ -369,7 +370,7 @@ print('Fizz' * (n % 3 == 0) + 'Buzz' * (n % 5 == 0) or n)
 * for [x, y] in [[1, 2], [3, 4], [5, 6]]:
 * for x in [list]:
 * for x in {set}:
-* for x in "String":<br/>
+* for x in "String":<br/><br>
 
 * sys.stdin.readline()은 개행 문자를 포함하는 문자열을 반환한다.
  .strip()을 붙이면 개행 문제를 포함하지 않고 반환한다.
