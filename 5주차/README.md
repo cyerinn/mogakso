@@ -314,24 +314,24 @@ IP는 한눈에 보기 힘들고, IP가 쉽게 바뀔 수 있다. 그래서 *DNS
 <br/><br/><br/>
 
 # 백준 문제 풀이
-* lamda 함수는 익명 함수라고도 불린다.<br/>
-형태는 lamda 람다 인자 : 표현식 이다.<br/>
+* lambda 함수는 익명 함수라고도 불린다.<br/>
+형태는 lambda 람다 인자 : 표현식 이다.<br/>
 ```python
 def add(a, b)
     return a + b
 ```
 위 함수를 아래와 같이 정의 할 수 있다.<br/>
 ```python
-add = lamda x, y : x + y
+add = lambda x, y : x + y
 ```
 
 [age, name]들의 list인 2차원 배열이 있다고 생각하자. age만 비교하고 싶다면 아래 코드를 사용하면 된다.<br/>
 ```python
-sort(key = lamda x : x[0])
+sort(key = lambda x : x[0])
 ```
 또한 아래와 같이 filter 함수와 함께 사용할 수 있다.<br/>
 ```python
-my_list2 = list(filter(lamda x: x % 2 == 1, my_list))
+my_list2 = list(filter(lambda x: x % 2 == 1, my_list))
 ```
 * min(list, key=len) or max(list, key=len): list 안의 문자열을 길이 순으로 반환<br/>
 * str.sort(): list 안의 문자열을 사전 순으로 정렬
