@@ -131,17 +131,18 @@ empty line
 
 ### 요청 메시지
 * **시작 라인(start-line)** = request-line
-request-line = method SP(공백) request-target SP HTTP-version CRLF(엔터)<br/><br/>
+request-line = method SP(공백) request-target SP HTTP-version CRLF(엔터)<br/>
 
 1. HTTP 메서드 -> GET, POST(요청 내역 처리), PUT, DELETE 등
 2. 요청 대상 -> absolute-path[?query], 절대 경로로 시작한다.
 3. HTTP 버전
+<br/>
 
 ### 응답 메시지
 * **start-line** = status-line<br/>
-status-line = HTTP-version SP status-code SP reason-phrase CRLF<br/><br/>
+status-line = HTTP-version SP status-code SP reason-phrase CRLF<br/>
 
-상태 코드(요청이 성공했는지, 실패 했는지)를 확인 할 수 있다. 200은 성공, 400은 클라이언트 요청 오류, 500은 서버 내부 오류이다. 그리고 이유 문구로 끝이 난다.<br/>
+상태 코드(요청이 성공했는지, 실패 했는지)를 확인 할 수 있다. 200은 성공, 400은 클라이언트 요청 오류, 500은 서버 내부 오류이다. 그리고 이유 문구로 끝이 난다.<br/><br/>
 
 * **Header**:<br/>
 header-field = field-name":" OWS field-value OWS (OWS: 띄어쓰기 허용)<br/>
@@ -162,10 +163,10 @@ HTTP API를 설계할 때 **리소스 식별**이 중요하다.<br/>
 * 회원 조회 /members/{id}
 * 회원 등록 /members/{id}<br/>
 
-**리소스를 식별**할 수 있고, URI의 **계층 구조(path)**로 만들었다.<br/><br/>
+**리소스를 식별**할 수 있고, URI의 **계층 구조(path)**로 만들었다. <br/><br/>
 
-그럼 회원을 등록하고 조회하고 삭제하는 API가 모두 같은데 어떻게 구분을 할 것인가? -> **메서드**를 이용한다.><br/>
-URI는 오직 리소스만 식별을 하는 것이고, 리소스와 행위를 분리하는 것이다. 행위는 조회, 등록, 삭제, 변경과 같은 메서드를 사용해야 한다.<br/>
+그럼 회원을 등록하고 조회하고 삭제하는 API가 모두 같은데 어떻게 구분을 할 것인가? -> **메서드**를 이용한다.<br/>
+URI는 오직 리소스만 식별을 하는 것이고, 리소스와 행위를 분리하는 것이다. 행위는 조회, 등록, 삭제, 변경과 같은 메서드를 사용해야 한다.<br/><br/>
 
 +) 정리
 * 리소스 = URL(URI) // 리소스 식별, URI 계층구조
@@ -231,8 +232,7 @@ POST 메서드는 단순히 게시하는 것만이 아니라 다양한 기능을
 * 서버가 아직 식별하지 않은 새 리소스를 생성한다.
 * 기존 자원에 데이터를 추가한다.
 * 다른 메서드를 사용하기 애매한 경우에 POST를 사용해도 좋다.<br/><br/>
-
-URL에 POST 요청이 들어오면 **요청 데이터를 어떻게 처리할지는 리소스마다 알아서 정의해야 한다.**<br/><br/>
+-> URL에 POST 요청이 들어오면 **요청 데이터를 어떻게 처리할지는 리소스마다 알아서 정의해야 한다.**<br/><br/>
 
 + 리소스 단위로 설계가 어려운 경우, /orders/{orderId}/start-delivery <br/>
 URI에는 계층 구조로 리소스만을 사용하려고 하되, 설계가 어려운 경우 위와 같은 컨트롤 URI을 사용할 수도 있다.<br/><br/>
@@ -243,26 +243,27 @@ URI에는 계층 구조로 리소스만을 사용하려고 하되, 설계가 어
 POST와 다르게 클라이언트가 리소스를 식별한다.<br/>
 ex) PUT /members/**100** <br/><br/>
 
-PUT /members/100 HTTP/1.1<br/>
-...<br/>
 덮어 씌운다고 생각하면 된다. (원래 리소스를 완전히 대체한다! age만 PUT하면 원래 있던 username field는 사라진다. 리소스를 지우고 생성한다고 생각하면 된다.)<br/><br/>
 
 4. **PATCH**<br/>
 리소스를 부분 변경한다. 이 또한 post와 다르게 클라이언트가 리소스를 식별한다.<br/>
-patch가 지원되지 않는 서버도 있다. 이의 경우에는 post를 사용하면 된다.<br/><br/>
+patch가 지원되지 않는 서버도 있다. 이의 경우에는 post를 사용하면 된다.<br/>
 
-PATCH /members/100 HTTP/1.1<br/>
-Content-Type: application/json<br/>
-{<br/>
-    "age": 80<br/>
-}<br/>
+```
+PATCH /members/100 HTTP/1.1
+Content-Type: application/json
+{
+    "age": 80
+}
+```
 요청 메시지를 보내면 username은 그대로 두고 age만 변경한다.<br/><br/>
 
 5. **DELETE**<br/>
-리소스를 제거한다.<br/><br/>
-
-DELETE /members/100 HTTP/1.1<br/>
-Host:...<br/>
+리소스를 제거한다.<br/>
+```
+DELETE /members/100 HTTP/1.1
+Host:...
+```
 요청 메시지를 보내면 members/100 리소스를 제거한다.<br/><br/>
 
 ### HTTP 메서드의 속성
@@ -315,11 +316,11 @@ for x in range(N, N+8):
 정렬된 데이터에서 특정한 값을 찾는다. 탐색 범위를 반으로 줄여가면서 찾으며 시간 복잡도는 O(log n)이다.<br/>
 그래서 대용량 데이터에서 특정한 위치를 찾는 데 유용하다. 단점으론 정렬된 데이터에서만 가능하다는 것이며, 생성과 수정에 취약하다.<br/><br/>
 
-1. 중간 인덱스(mid)를 찾는다.
-2. target과 mid_value를 비교한다.
-3. target이 mid_value보다 작으면 mid를 기준으로 왼쪽 배열을 탐색한다.
+    1. 중간 인덱스(mid)를 찾는다.
+    2. target과 mid_value를 비교한다.
+    3. target이 mid_value보다 작으면 mid를 기준으로 왼쪽 배열을 탐색한다.
     그렇지 않으면 mid를 기준으로 오른쪽 배열을 탐색한다.
-4. target과 mid_value가 같을 때까지 위의 과정을 반복한다.
+    4. target과 mid_value가 같을 때까지 위의 과정을 반복한다.
 <br/>
 
 * list에서는 in, not in의 시간복잡도가 O(N)이고, set에서는 in, not in의 시간복잡도가 O(1)이다.<br/>
@@ -327,11 +328,11 @@ for x in range(N, N+8):
 * list에서 insert는 시간복잡도가 O(N)이고,<br/>
 deque에서 appendleft는 시간복잡도가 O(1)이다.<br/><br/>
 
-덱은 double-ended queue로 양 끝의 elements를 삭제/삽입한다. <br/>
-double-linked list로 구현돼 삭제/삽입의 시간 복잡도는 O(1)이다.<br/><br/>
+    덱은 double-ended queue로 양 끝의 elements를 삭제/삽입한다. <br/>
+    double-linked list로 구현돼 삭제/삽입의 시간 복잡도는 O(1)이다.<br/><br/>
 
-list는 고정된 사이즈를 갖는 array 형태다. <br/>
-그래서 맨 앞에 있는 요소를 삭제/삽입하면 다른 요소들도 함께 이동을 해야하므로 삽입/삭제에 O(n)의 시간복잡도를 가진다. <br/>
+    list는 고정된 사이즈를 갖는 array 형태다. <br/>
+    그래서 맨 앞에 있는 요소를 삭제/삽입하면 다른 요소들도 함께 이동을 해야하므로 삽입/삭제에 O(n)의 시간복잡도를 가진다. <br/>
 
 * 그리디 알고리즘: 현재 상황에서 가장 좋은 것을 고르는 알고리즘이다. 하지만 최종적인 결과에 대해 최적해를 보장해주진 않는다.<br/>
 그래서 그리디 알고리즘을 사용하려면 항상 안전하다는 것이 보장되어야 한다. 즉 최적해를 도출해내야 한다.
