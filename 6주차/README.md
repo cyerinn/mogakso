@@ -9,7 +9,7 @@ Link: https://www.inflearn.com/course/http-%EC%9B%B9-%EB%84%A4%ED%8A%B8%EC%9B%8C
 resource: 자원, URI로 식별할 수 있는 모든 것
 <br/><br/>
 
-URL 문법: scheme://[userinfo@]host[:port][/path][?query][#fragment]
+### **URL 문법**: scheme://[userinfo@]host[:port][/path][?query][#fragment]
 <br/>
 ex) https://www.google.com/search?q=dog&oq=do
 <br/><br/>
@@ -109,21 +109,24 @@ ex) 로그인 (로그인 했다는 상태를 서버에서 유지해야만 한다
 4. message body 
 <br/><br/>
 
-요청 메시지 예시:<br/>
-GET /search?... HTTP/1.1 <- start-line<br/>
-Host:www.google.com <- header<br/>
-empty line<br/><br/>
-
+요청 메시지 예시:
+```
+GET /search?... HTTP/1.1 <- start-line
+Host:www.google.com <- header
+empty line
+```
 요청도 메시지 바디를 가질 수 있다.<br/><br/>
 
-응답 메시지 예시:<br/>
-HTTP/1.1 200 OK <- start-line<br/>
-Content-Type: text/html;charset=UTF-8<br/>
-Content-Length: 3121 <- header<br/>
-empty line<br/>
-<html> <br/>
-<body>..</body> <br/>
-</html> <- message body <br/>
+응답 메시지 예시:
+```
+HTTP/1.1 200 OK <- start-line
+Content-Type: text/html;charset=UTF-8
+Content-Length: 3121 <- header
+empty line
+<html> 
+<body>..</body>
+</html> <- message body 
+```
 <br/>
 
 ### 요청 메시지
@@ -180,38 +183,46 @@ URI는 오직 리소스만 식별을 하는 것이고, 리소스와 행위를 �
 1. **GET** <br/>
 리소스 조회, 서버에 전달하고 싶은 데이터는 query를 통해서 전달한다.<br/><br/>
 
-예를 들어,<br/>
-GET /members/100 HTTP/1.1<br/>
-Host:...<br/>
+예를 들어,
+```
+GET /members/100 HTTP/1.1
+Host:...
+```
 요청 메시지를 던진다.<br/><br/>
 
-(<br/>
-    "username": "kim".<br/>
-    "age": 20<br/>
-)<br/>
+```
+(
+    "username": "kim",
+    "age": 20
+)
+```
 서버에서 위의 메시지 바디와 함께 응답 메시지를 던진다.<br/>
 <br/>
 
 ### POST
 요청 데이터 처리, 메시지 바디를 통해 서버로 요청 데이터를 전달한다.<br/><br/>
 
-예를 들어,<br/>
-POST /members HTTP/1.1<br/>
-Content-Type: application/json<br/>
-{<br/>
-    "username": "kim",<br/>
-    "age": 20<br/>
-}<br/>
+예를 들어,
+```
+POST /members HTTP/1.1
+Content-Type: application/json
+{
+    "username": "kim",
+    "age": 20
+}
+```
 요청 메시지를 보낸다.<br/><br/>
 
 그럼 서버는 members/100 라는 신규 식별자를 생성하고,<br/>
-HTTP/1.1 201 Created<br/>
-...<br/>
-Location: /members/100 <- 생성된 리소스의 경로<br/>
-{<br/>
-    "username": "kim",<br/>
-    "age": 20<br/>
-}<br/>
+```
+HTTP/1.1 201 Created
+...
+Location: /members/100 <- 생성된 리소스의 경로
+{
+    "username": "kim",
+    "age": 20
+}
+```
 응답 메시지를 보낸다.<br/><br/>
 
 POST 메서드는 단순히 게시하는 것만이 아니라 다양한 기능을 한다.<br/>
